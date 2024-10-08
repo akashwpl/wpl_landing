@@ -8,6 +8,10 @@ import rightArrowSvg from '../assets/svg/right-arrow.svg'
 import axios from 'axios'
 import DisableZoom from '../hooks/usePreventZoom'
 
+import Papa from 'papaparse'
+import { BASE_URL } from '../utils/helper'
+
+
 const LeaderBoardPage = () => {
 
   const tableRef = useRef(null);
@@ -16,6 +20,8 @@ const LeaderBoardPage = () => {
   const [itemsPerPage] = useState(9);
   const [isLoading, setIsLoading] = useState(true);
   const [tableHeight, setTableHeight] = useState(0);
+
+  const [selectedFile, setSelectedFile] = useState(null);
 
 
   const API_URI = import.meta.env.VITE_SPREADSHEET_API_URL_NEW
@@ -26,18 +32,28 @@ const LeaderBoardPage = () => {
     window.scrollTo(0, 0);
     setIsLoading(true);
     const getData = async () => {
-      const response = (await axios({
-        method: 'GET',
-        url: API_URI,
-        // headers: headers
-      })).data;
-      // response.shift();
-      setData(response);
-      setIsLoading(false);
+      try {
+        const response = (await axios({
+          method: 'GET',
+          url: `${BASE_URL}/leaderboard`,
+          // headers: headers
+        }))
+  
+        console.log('response learnadad', response);
+        // response.shift();
+        setData(response?.data?.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.log('error fetching leaderboard', error);
+      }
+      
     }
 
     getData();
   }, []);
+
+
+
 
   useEffect(() => {
     if(tableRef?.current) {
@@ -62,6 +78,7 @@ const LeaderBoardPage = () => {
     <>
       <DisableZoom />
       <div className='pt-40 flex justify-center items-center mb-56 min-h-screen'>
+
         <div className='flex flex-col justify-center items-center'>
           <div className='text-[36px] md:text-[48px] leading-[45.6px] font-bienvenue text-[#FAF1B1] uppercase mb-10'>WPL LEADERBOARD</div>
           <div className=''>

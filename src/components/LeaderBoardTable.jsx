@@ -2,15 +2,17 @@ import { useMemo } from "react";
 
 const LeaderboardTable = ({data, pos}) => {
 
+  console.log('data', data);
+
   const headerColumns = Object?.keys(data[0]);
 
   const columnWidths = useMemo(() => {
     const widths = {};
     headerColumns.forEach((key, index) => {
       if (index === 0) {
-        widths[key] = 'w-[15px] md:w-[50px] lg:w-[80px]';
+        widths[key] = 'w-[15px] md:w-[50px] lg:w-[140px]';
       } else if (index === 1) {
-        widths[key] = 'w-[40px] md:w-[170px] lg:w-[190px]';
+        widths[key] = 'w-[40px] md:w-[170px] lg:w-[130px]';
       } else if (index === 2) {
         widths[key] = 'w-[25px] md:w-[100px] lg:w-[125px]';
       } else if (index === 3) {
@@ -40,7 +42,7 @@ const LeaderboardTable = ({data, pos}) => {
           </tr>
         </thead>
         <tbody className='border border-table_border_blue w-full'>
-          {data.map((row, rowIndex) => (
+          {data?.map((row, rowIndex) => (
             <tr key={rowIndex} className="text-center text-[10px] md:text-[14px] font-medium border-t border-table_border_blue">
               {headerColumns.map((key, cellIndex) => (
                 <td key={cellIndex} className={`h-[56px] border-l border-table_border_blue font-inter ${columnWidths[key]} min-w-[60px] overflow-hidden text-ellipsis whitespace-nowrap`}>

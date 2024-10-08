@@ -219,4 +219,9 @@ html, body{
 }
 
 
+.yellow-link{
+  color: #FAF1B1;
+  text-decoration: none;
+  transition: all 0.3s;
+}
 

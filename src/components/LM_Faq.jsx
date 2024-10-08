@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
     Accordion,
@@ -6,12 +6,12 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "../components/ui/accordion"
+import { BASE_URL, highlightWord } from '../utils/helper'
+import DOMPurify from 'dompurify'
+import parse from 'html-react-parser';
+
 
 const faq = [
-    // {
-    //     title: 'Can users from the United States participate?',
-    //     content: 'We cannot accept contributors from the United States due to regulatory risks and contributors from sanctioned territories. We appreciate your understanding'
-    // },
     {
         title: 'What is the StarkWare Wolf Pack League inspired by?',
         content: <p>The Wolf Pack League is inspired by <a href='https://lunarcrush.com/earn' target='_blank' className='text-primary underline'>LunarCrush</a> and  <a href='https://superteam.fun/' target='_blank' className='text-primary underline'>Superteam</a>. It will start with grassroots tools like Notion and Discord for the frontend, with a solid backend using CommonRoom and Onlydust.</p>
@@ -97,20 +97,55 @@ const faq = [
 ]
 
 const LM_Faq = () => {
+
+  
+
+    const [faq, setFaq] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const getFaqs = async () => {
+            setIsLoading(true);
+            try {
+                const response = await fetch(`${BASE_URL}/faq/learn_more`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                const faq = await response.json();
+                setFaq(faq?.data);
+            } catch (error) {
+                console.log('error fetching faq learn more', error);
+            } finally{
+                setIsLoading(false);
+            }
+        }
+        getFaqs();
+    }, [])
+
+    const convertStringToJSX = (str) => {
+        const modifiedString = str.replace(/<a /g, '<a class="text-primary" ');
+        return parse(modifiedString);
+    }
+
+
   return (
     <div className='flex flex-col items-start  md:min-h-[110vh] mb-10'>
-        <div className='w-full mt-6'>
-            <Accordion type="single" collapsible>
-                {faq.map((item, index) => (
-                    <AccordionItem key={index} value={`item-${index}`} data-aos="fade-up" data-aos-delay={`${(400) + index}`} data-aos-duration="700" className="border-[#E4E7EC1A] mb-4 font-inter">
-                        <AccordionTrigger className="text-white text-left text-[14px] md:text-[18px] leading-[28px] font-medium hover:no-underline">{item.title}</AccordionTrigger>
-                        <AccordionContent className="text-white/80 text-[12px] md:text-[16px] leading-[24px] w-[97%]">
-                            {item.content}
-                        </AccordionContent>
-                    </AccordionItem>
-                ))}             
-            </Accordion>
-        </div>
+        {isLoading ? <div className='text-white text-[14px] md:text-[16px] font-inter'>Loading...</div> :
+            <div className='w-full mt-6'>
+                <Accordion type="single" collapsible>
+                    {!faq.length ? <p className='text-white/50'>No FAQs Found</p> : faq.map((item, index) => (
+                        <AccordionItem key={index} value={`item-${index}`} data-aos="fade-up" data-aos-delay={`${(400) + index}`} data-aos-duration="700" className="border-[#E4E7EC1A] mb-4 font-inter">
+                            <AccordionTrigger className="text-white text-left text-[14px] md:text-[18px] leading-[28px] font-medium hover:no-underline">{item.title}</AccordionTrigger>
+                            <AccordionContent className="text-white/80 text-[12px] md:text-[16px] leading-[24px] w-[97%]">
+                                {convertStringToJSX(item.content)}                               
+                            </AccordionContent>
+                        </AccordionItem>
+                    ))}             
+                </Accordion>
+            </div>
+        }
     </div>
   )
 }
