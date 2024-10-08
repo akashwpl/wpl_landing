@@ -35,13 +35,18 @@ const LeaderBoardPage = () => {
       try {
         const response = (await axios({
           method: 'GET',
-          url: `${BASE_URL}/leaderboard`,
+          url: API_URI,
+          // url: `${BASE_URL}/leaderboard`,
           // headers: headers
         }))
   
         console.log('response learnadad', response);
-        // response.shift();
-        setData(response?.data?.data);
+
+        // Sheet db API
+        setData(response?.data);
+
+        // Mongo DB API
+        // setData(response?.data?.data);
         setIsLoading(false);
       } catch (error) {
         console.log('error fetching leaderboard', error);
@@ -84,10 +89,10 @@ const LeaderBoardPage = () => {
           <div className=''>
             <div ref={tableRef} className={`min-h-[544px] bg-[#0F1970] border border-table_border_blue`} style={{minHeight: tableHeight + "px"}}>
               {isLoading ? <div className='min-h-[544px] w-full lg:min-w-[1185px] flex justify-center items-center'>
-                <div class='flex space-x-2 justify-center items-center size-full'>
-                  <div class='h-4 w-4 bg-[#FAF1B1] rounded-full animate-bounce [animation-delay:-0.3s]'></div>
-                  <div class='h-4 w-4 bg-[#FAF1B1] rounded-full animate-bounce [animation-delay:-0.15s]'></div>
-                  <div class='h-4 w-4 bg-[#FAF1B1] rounded-full animate-bounce'></div>
+                <div className='flex space-x-2 justify-center items-center size-full'>
+                  <div className='h-4 w-4 bg-[#FAF1B1] rounded-full animate-bounce [animation-delay:-0.3s]'></div>
+                  <div className='h-4 w-4 bg-[#FAF1B1] rounded-full animate-bounce [animation-delay:-0.15s]'></div>
+                  <div className='h-4 w-4 bg-[#FAF1B1] rounded-full animate-bounce'></div>
                 </div>
               </div> :
                 <LeaderboardTable data={currentItems}/>

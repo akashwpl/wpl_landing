@@ -22,7 +22,6 @@ const Leaderboard = () => {
                 // headers: headers
             })).data;
 
-            // response.shift();
             setDiscordData(response);
         }
         getData();
