@@ -8,7 +8,7 @@ const LeaderboardTable = ({data, pos}) => {
     const widths = {};
     headerColumns.forEach((key, index) => {
       if (index === 0) {
-        widths[key] = 'w-[15px] md:w-[50px] lg:w-[50px]';
+        widths[key] = 'w-[15px] md:w-[50px] lg:w-[80px]';
       } else if (index === 1) {
         widths[key] = 'w-[40px] md:w-[170px] lg:w-[190px]';
       } else if (index === 2) {
