@@ -94,7 +94,10 @@ const AdminPanel = () => {
     }
 
     const uploadFile = async (e) => {
-        console.log('selectedFile', selectedFile);
+        if(selectedFile === null) {
+            alert('Please select a file to upload');
+            return;
+        }
         const formData = new FormData();
         formData.append('leaderboardCSVFile', selectedFile);
 
@@ -106,10 +109,17 @@ const AdminPanel = () => {
                 },
                 body: formData
             });
-
-            console.log('uploaded CSV response', response);
+            if(response.status === 401) {
+                alert('Unauthorized');
+                return;
+            }
+            if(response.status === 201) {
+                alert('File uploaded successfully');
+            }
         } catch (error) {
             console.error(error);
+        } finally {
+            setSelectedFile(null);
         }
     }
 
@@ -121,48 +131,48 @@ const AdminPanel = () => {
         setSelectedFile(null);
     }
 
+    const getFaqsHome = async () => {
+        setIsLoading(true);
+        try {
+            const response = await fetch(`${BASE_URL}/faq/home`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            const faq = await response.json();
+            setFaqHome(faq?.data);
+        } catch (error) {
+            console.log('error fetching faq', error);
+        } finally{
+            setIsLoading(false);
+        }
+    }
+    const getFaqsLearnMore = async () => {
+        setIsLoading(true);
+        try {
+            const response = await fetch(`${BASE_URL}/faq/learn_more`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            const faq = await response.json();
+            setFaqLearnMore(faq?.data);
+        } catch (error) {
+            console.log('error fetching faq', error);
+        } finally{
+            setIsLoading(false);
+        }
+    }
+
     useEffect(() => {
-        const getFaqsHome = async () => {
-            setIsLoading(true);
-            try {
-                const response = await fetch(`${BASE_URL}/faq/home`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                const faq = await response.json();
-                setFaqHome(faq?.data);
-            } catch (error) {
-                console.log('error fetching faq', error);
-            } finally{
-                setIsLoading(false);
-            }
-        }
-        const getFaqsLearnMore = async () => {
-            setIsLoading(true);
-            try {
-                const response = await fetch(`${BASE_URL}/faq/learn_more`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                const faq = await response.json();
-                setFaqLearnMore(faq?.data);
-            } catch (error) {
-                console.log('error fetching faq', error);
-            } finally{
-                setIsLoading(false);
-            }
-        }
         getFaqsHome();
         getFaqsLearnMore();
     }, [])
 
 
     const handleFAQupdate = async (data) => {
-        console.log('data', data)
         setShowUpdateModal(true)
         setSelectedFAQ(data)
 
@@ -172,12 +182,15 @@ const AdminPanel = () => {
 
     const handleCloseUpdateModal = () => {
         setShowUpdateModal(false)
+        setSelectedFAQ({})
+        setUpdateFAQTitle('')
+        setUpdateFAQContent('')
     }
 
     const handleSave = React.useCallback(async (type) => {
         const savedData = await editorCore.current.save();
         await handleUpdateFaq(savedData?.blocks?.at(0)?.data?.text || updateFAQContent)
-    }, [updateFAQTitle, updateFAQContentm, selectedFAQ])
+    }, [updateFAQTitle, updateFAQContent, selectedFAQ])
 
     const handleInitialize = React.useCallback((instance) => {
         editorCore.current = instance
@@ -185,6 +198,14 @@ const AdminPanel = () => {
 
 
     const handleUpdateFaq = async (content) => {
+        if(content.length === 0) {
+            alert('Content cannot be empty');
+            return;
+        }
+        if(updateFAQTitle.length === 0) {
+            alert('Title cannot be empty');
+            return;
+        }
         try {
             const resposne = await fetch(`${BASE_URL}/faq/update/${selectedFAQ?._id}`, {
                 method: 'PUT',
@@ -198,15 +219,18 @@ const AdminPanel = () => {
                     type: selectedFAQ?.type
                 })
             })
-            const data = await resposne.json();
-            console.log('updated faq', data?.data)
         } catch (error) {
             console.log('error updating faq', error)
+            alert('Error updating FAQ');
+        } finally {
+            handleCloseUpdateModal();
+            selectedFAQ?.type === 'home' ? getFaqsHome() : getFaqsLearnMore();
         }
     }
 
     const convertStringToJSX = (str) => {
-        return parse(str);
+        const modifiedString = str.replace(/<a /g, '<a target="_blank" class="text-primary" ');
+        return parse(modifiedString);
     }
 
   return (
@@ -260,11 +284,11 @@ const AdminPanel = () => {
                 <div>
                     <div className='text-white text-xl font-semibold mb-4'>Update FAQ's in HOME page:</div>
                     {faqHome.map((item, idx) => (
-                        <div key={idx} className='flex items-center mb-4 gap-2' onClick={() => {handleFAQupdate(item)}}>
-                            <div className='size-2 rounded-full bg-white'/>
+                        <div key={idx} className='flex items-center mb-4 gap-2 cursor-pointer' onClick={() => {handleFAQupdate(item)}}>
+                            <div className='min-w-2 min-h-2 rounded-full bg-white'/>
                             <div>
                                 <p className='text-white text-sm'>{item?.title}</p> 
-                                <p className='text-primary text-[12px] text-ellipsis text-wrap'>{convertStringToJSX(item.content)}</p> 
+                                <p className='text-white/60 text-[12px] text-ellipsis text-wrap'>{convertStringToJSX(item.content)}</p> 
                             </div>
                         </div>
                     ))}
@@ -275,11 +299,11 @@ const AdminPanel = () => {
                 <div>
                     <div className='text-white text-xl font-semibold mb-4'>Update FAQ's in Learn More page:</div>
                     {faqLearnMore.map((item, idx) => (
-                        <div key={idx} className='flex items-center mb-4 gap-2' onClick={() => {handleFAQupdate(item)}}>
+                        <div key={idx} className='flex items-center mb-4 gap-2 cursor-pointer' onClick={() => {handleFAQupdate(item)}}>
                             <div className='min-w-2 min-h-2 rounded-full bg-white'/>
                             <div>
                                 <p className='text-white text-sm'>{item?.title}</p> 
-                                <p className='text-primary text-[12px] text-ellipsis text-wrap'>{convertStringToJSX(item.content)}</p> 
+                                <p className='text-white/60 text-[12px] text-ellipsis text-wrap'>{convertStringToJSX(item.content)}</p> 
                             </div>
                         </div>
                     ))}
@@ -317,10 +341,11 @@ const AdminPanel = () => {
             <div className='bg-white md:min-w-[800px] md:max-w-[1200px] px-4 py-2 rounded-md'>
                 <div className='text-black text-xl font-semibold mb-2'>Update FAQ</div>
                 <div>
-                    <input type='text' onChange={(e) => setUpdateFAQTitle(e.target.value)} value={updateFAQTitle} placeholder={selectedFAQ?.title} className='w-full px-2 py-1 rounded-md bg-black/10'/>
+                    <div className='text-black/60 text-sm'>Title:</div>
+                    <input type='text' onChange={(e) => setUpdateFAQTitle(e.target.value)} value={updateFAQTitle} placeholder={selectedFAQ?.title} className='w-full px-2 py-1 rounded-md bg-black/5 outline-none border-none'/>
                 </div>
                 <div className='mt-4'>
-
+                    <div className='text-black/60 text-sm'>Content:</div>
                     <ReactEditorJS 
                         onInitialize={handleInitialize}
                         tools={EDITOR_JS_TOOLS} 
@@ -328,11 +353,10 @@ const AdminPanel = () => {
                         value={{blocks: [{id: "1", type: "paragraph", data: {text: updateFAQContent}}]}} 
                         placeholder={updateFAQContent}
                     />
-                    {/* <textarea placeholder='Content' onChange={(e) => setUpdateFAQContent(e.target.value)} value={selectedFAQ?.content} className='w-full h-[200px] px-2 py-1 rounded-md bg-black/10'/> */}
                 </div>
                 <div className='mt-4 flex items-center gap-2'>
-                    <button onClick={() => handleSave(type)} className='bg-primary px-4 py-1 rounded-md text-black font-semibold'>Update</button>
-                    <button className='bg-primary px-4 py-1 rounded-md text-black font-semibold'>Cancel</button>
+                    <button onClick={() => handleSave()} className='bg-primary px-4 py-1 rounded-md text-black font-semibold'>Update</button>
+                    <button onClick={handleCloseUpdateModal} className='bg-primary px-4 py-1 rounded-md text-black font-semibold'>Cancel</button>
                 </div>
             </div>
       </Modal>
