@@ -125,7 +125,7 @@ const LM_Faq = () => {
     }, [])
 
     const convertStringToJSX = (str) => {
-        const modifiedString = str.replace(/<a /g, '<a class="text-primary" ');
+        const modifiedString = str.replace(/<a /g, '<a target="_blank" class="text-primary" ');
         return parse(modifiedString);
     }
 

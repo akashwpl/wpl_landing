@@ -41,7 +41,7 @@ const Faq = () => {
     }, [])
 
     const convertStringToJSX = (str) => {
-        const modifiedString = str.replace(/<a /g, '<a class="yellow-link" ');
+        const modifiedString = str.replace(/<a /g, '<a target="_blank" class="text-primary" ');
         return parse(modifiedString);
     }
 
