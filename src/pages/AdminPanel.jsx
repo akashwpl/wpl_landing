@@ -28,21 +28,21 @@ import InlineCode from '@editorjs/inline-code'
 import SimpleImage from '@editorjs/simple-image'
 
 export const EDITOR_JS_TOOLS = {
-  embed: Embed,
-  table: Table,
+//   embed: Embed,
+//   table: Table,
   marker: Marker,
-  list: List,
-  warning: Warning,
-  code: Code,
+//   list: List,
+//   warning: Warning,
+//   code: Code,
   linkTool: LinkTool,
-  image: Image,
-  raw: Raw,
+//   image: Image,
+//   raw: Raw,
   header: Header,
-  quote: Quote,
-  checklist: CheckList,
-  delimiter: Delimiter,
-  inlineCode: InlineCode,
-  simpleImage: SimpleImage,
+//   quote: Quote,
+//   checklist: CheckList,
+//   delimiter: Delimiter,
+//   inlineCode: InlineCode,
+//   simpleImage: SimpleImage,
 }
 
 const AdminPanel = () => {

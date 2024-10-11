@@ -24,34 +24,34 @@ const faq = [
 
 const Faq = () => {
 
-    // const [faq, setFaq] = useState([])
-    // const [isLoading, setIsLoading] = useState(true);
+    const [faq, setFaq] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
 
-    // useEffect(() => {
-    //     const getFaqs = async () => {
-    //         setIsLoading(true);
-    //         try {
-    //             const response = await fetch(`${BASE_URL}/faq/home`, {
-    //                 method: 'GET',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                 }
-    //             })
-    //             const faq = await response.json();
-    //             setFaq(faq?.data);
-    //         } catch (error) {
-    //             console.log('error fetching faq', error);
-    //         } finally{
-    //             setIsLoading(false);
-    //         }
-    //     }
-    //     getFaqs();
-    // }, [])
+    useEffect(() => {
+        const getFaqs = async () => {
+            setIsLoading(true);
+            try {
+                const response = await fetch(`${BASE_URL}/faq/home`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                const faq = await response.json();
+                setFaq(faq?.data);
+            } catch (error) {
+                console.log('error fetching faq', error);
+            } finally{
+                setIsLoading(false);
+            }
+        }
+        getFaqs();
+    }, [])
 
-    // const convertStringToJSX = (str) => {
-    //     const modifiedString = str.replace(/<a /g, '<a target="_blank" class="text-primary" ');
-    //     return parse(modifiedString);
-    // }
+    const convertStringToJSX = (str) => {
+        const modifiedString = str.replace(/<a /g, '<a target="_blank" class="text-primary" ');
+        return parse(modifiedString);
+    }
 
   return (
     <div id="faq_section" data-aos="fade-up" data-aos-delay="1000" data-aos-duration="700" className='flex flex-col justify-center items-center mt-20 md:min-h-[110vh] xl:min-h-[80vh] mb-20'>
@@ -66,8 +66,8 @@ const Faq = () => {
                         <AccordionItem data-aos="fade-up" data-aos-delay={1000 * (index * 10)} data-aos-duration="700" key={index} value={`item-${index}`} className="border-[#E4E7EC1A] mb-4">
                             <AccordionTrigger className="text-white text-[14px] md:text-[18px] font-medium hover:no-underline font-inter">{item.title}</AccordionTrigger>
                             <AccordionContent className="text-white/80 font-inter text-[12px] md:text-[16px] max-w-[300px] md:max-w-[450px] lg:max-w-[862px]">
-                                {/* {convertStringToJSX(item.content)} */}
-                                {item.content}
+                                {convertStringToJSX(item.content)}
+                                {/* {item.content} */}
                             </AccordionContent>
                         </AccordionItem>
                     ))}             

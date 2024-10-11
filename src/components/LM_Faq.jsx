@@ -100,34 +100,34 @@ const LM_Faq = () => {
 
   
 
-    // const [faq, setFaq] = useState([])
-    // const [isLoading, setIsLoading] = useState(true);
+    const [faq, setFaq] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
 
-    // useEffect(() => {
-    //     const getFaqs = async () => {
-    //         setIsLoading(true);
-    //         try {
-    //             const response = await fetch(`${BASE_URL}/faq/learn_more`, {
-    //                 method: 'GET',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                 }
-    //             })
-    //             const faq = await response.json();
-    //             setFaq(faq?.data);
-    //         } catch (error) {
-    //             console.log('error fetching faq learn more', error);
-    //         } finally{
-    //             setIsLoading(false);
-    //         }
-    //     }
-    //     getFaqs();
-    // }, [])
+    useEffect(() => {
+        const getFaqs = async () => {
+            setIsLoading(true);
+            try {
+                const response = await fetch(`${BASE_URL}/faq/learn_more`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                const faq = await response.json();
+                setFaq(faq?.data);
+            } catch (error) {
+                console.log('error fetching faq learn more', error);
+            } finally{
+                setIsLoading(false);
+            }
+        }
+        getFaqs();
+    }, [])
 
-    // const convertStringToJSX = (str) => {
-    //     const modifiedString = str.replace(/<a /g, '<a target="_blank" class="text-primary" ');
-    //     return parse(modifiedString);
-    // }
+    const convertStringToJSX = (str) => {
+        const modifiedString = str.replace(/<a /g, '<a target="_blank" class="text-primary" ');
+        return parse(modifiedString);
+    }
 
 
   return (
@@ -139,8 +139,8 @@ const LM_Faq = () => {
                         <AccordionItem key={index} value={`item-${index}`} data-aos="fade-up" data-aos-delay={`${(400) + index}`} data-aos-duration="700" className="border-[#E4E7EC1A] mb-4 font-inter">
                             <AccordionTrigger className="text-white text-left text-[14px] md:text-[18px] leading-[28px] font-medium hover:no-underline">{item.title}</AccordionTrigger>
                             <AccordionContent className="text-white/80 text-[12px] md:text-[16px] leading-[24px] w-[97%]">
-                                {/* {convertStringToJSX(item.content)}                                */}
-                                {item.content}
+                                {convertStringToJSX(item.content)}                               
+                                {/* {item.content} */}
                             </AccordionContent>
                         </AccordionItem>
                     ))}             

@@ -6,6 +6,7 @@ import startEarnPng from '../assets/subtract_png/start_earn.png'
 import startEarnHoverPng from '../assets/subtract_png/start_earn_hover.png'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { BASE_URL } from '../utils/helper'
 
 const Leaderboard = () => {
 
@@ -18,11 +19,11 @@ const Leaderboard = () => {
         const getData = async () => {
             const response = (await axios({
                 method: 'GET',
-                url: API_URI,
+                url: `${BASE_URL}/leaderboard`,
                 // headers: headers
             })).data;
 
-            setDiscordData(response);
+            setDiscordData(response?.data);
         }
         getData();
     }, []);

@@ -35,18 +35,18 @@ const LeaderBoardPage = () => {
       try {
         const response = (await axios({
           method: 'GET',
-          url: API_URI,
-          // url: `${BASE_URL}/leaderboard`,
-          // headers: headers
+          // url: API_URI,
+          url: `${BASE_URL}/leaderboard`,
+          headers: headers
         }))
   
         console.log('response learnadad', response);
 
         // Sheet db API
-        setData(response?.data);
+        // setData(response?.data);
 
         // Mongo DB API
-        // setData(response?.data?.data);
+        setData(response?.data?.data);
         setIsLoading(false);
       } catch (error) {
         console.log('error fetching leaderboard', error);
@@ -73,8 +73,8 @@ const LeaderBoardPage = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(data.length / itemsPerPage); i++) {
-    pageNumbers.push(i);
+  for (let i = 1; i <= Math.ceil(data?.length / itemsPerPage); i++) {
+    pageNumbers?.push(i);
   }
 
 

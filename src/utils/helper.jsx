@@ -25,5 +25,5 @@ export const highlightWord = (text = "", lineBreak = true, navigate) => {
     return elements;
 };
 
-export const BASE_URL = "http://139.59.58.53:3000"
+export const BASE_URL = "https://api.thewpl.xyz"
 // export const BASE_URL = "https://a120-2405-201-23-4175-750e-11b6-e891-5b3f.ngrok-free.app"
