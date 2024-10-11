@@ -10,6 +10,7 @@ import FancyButton from '../components/FancyButton'
 import startEarnPng from '../assets/subtract_png/start_earn.png'
 import startEarnHoverPng from '../assets/subtract_png/start_earn_hover.png'
 import DisableZoom from '../hooks/usePreventZoom'
+import { Info } from 'lucide-react'
 
 const keyFeatureData = [
     {
@@ -140,7 +141,9 @@ const LearnMorePage = () => {
                     </Link>
                 </div>
                 <div className='flex justify-center md:justify-start w-full mt-10'>
-                    <LeaderboardTable data={leaderboardJune?.slice(0, 5)} pos={'justify-start'}/>
+                    {leaderboardJune?.length <= 0 ? <div className='text-white/80 flex items-center gap-1'><Info size={16}/>Learderboard will be updated soon!</div> :
+                        <LeaderboardTable data={leaderboardJune?.slice(0, 5)} pos={'justify-start'}/>
+                    }
                 </div>
                
             </div>
