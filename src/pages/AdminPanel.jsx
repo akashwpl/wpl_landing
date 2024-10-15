@@ -46,7 +46,7 @@ export const EDITOR_JS_TOOLS = {
 }
 
 const AdminPanel = () => {
-    const ReactEditorJS = createReactEditorJS();
+    // const ReactEditorJS = createReactEditorJS();
     Modal.setAppElement('#root');
 
     const editorCore = React.useRef(null)
@@ -346,13 +346,13 @@ const AdminPanel = () => {
                 </div>
                 <div className='mt-4'>
                     <div className='text-black/60 text-sm'>Content:</div>
-                    <ReactEditorJS 
+                    {/* <ReactEditorJS 
                         onInitialize={handleInitialize}
                         tools={EDITOR_JS_TOOLS} 
                         defaultValue={{blocks: [{id: "1", type: "paragraph", data: {text: updateFAQContent}}]}}
-                        value={{blocks: [{id: "1", type: "paragraph", data: {text: updateFAQContent}}]}} 
+                        // value={{blocks: [{id: "1", type: "paragraph", data: {text: updateFAQContent}}]}}
                         placeholder={updateFAQContent}
-                    />
+                    /> */}
                 </div>
                 <div className='mt-4 flex items-center gap-2'>
                     <button onClick={() => handleSave()} className='bg-primary px-4 py-1 rounded-md text-black font-semibold'>Update</button>
