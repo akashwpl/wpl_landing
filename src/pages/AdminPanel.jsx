@@ -26,7 +26,10 @@ import CheckList from '@editorjs/checklist'
 import Delimiter from '@editorjs/delimiter'
 import InlineCode from '@editorjs/inline-code'
 import SimpleImage from '@editorjs/simple-image'
-import Editor from '../components/Editor';
+// import Editor from '../components/Editor';
+
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 export const EDITOR_JS_TOOLS = {
 //   embed: Embed,
@@ -45,7 +48,7 @@ export const EDITOR_JS_TOOLS = {
 //   inlineCode: InlineCode,
 //   simpleImage: SimpleImage,
 }
-const ReactEditorJS = createReactEditorJS();
+// const ReactEditorJS = createReactEditorJS();
 
 const AdminPanel = () => {
     Modal.setAppElement('#root');
@@ -189,8 +192,7 @@ const AdminPanel = () => {
     }
 
     const handleSave = React.useCallback(async (type) => {
-        const savedData = await editorCore.current.save();
-        await handleUpdateFaq(savedData?.blocks?.at(0)?.data?.text || updateFAQContent)
+        await handleUpdateFaq(updateFAQContent)
     }, [updateFAQTitle, updateFAQContent, selectedFAQ])
 
     const handleInitialize = React.useCallback((instance) => {
@@ -347,11 +349,10 @@ const AdminPanel = () => {
                 </div>
                 <div className='mt-4'>
                     <div className='text-black/60 text-sm'>Content:</div>
-                    <ReactEditorJS 
-                        onInitialize={handleInitialize}
+                    <ReactQuill 
                         tools={EDITOR_JS_TOOLS} 
-                        defaultValue={{blocks: [{id: "1", type: "paragraph", data: {text: updateFAQContent}}]}}
-                        // value={{blocks: [{id: "1", type: "paragraph", data: {text: updateFAQContent}}]}}
+                        value={updateFAQContent}
+                        onChange={setUpdateFAQContent}
                         placeholder={updateFAQContent}
                     />
                 </div>
