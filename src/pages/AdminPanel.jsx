@@ -46,8 +46,8 @@ export const EDITOR_JS_TOOLS = {
 }
 
 const AdminPanel = () => {
-    const ReactEditorJS = createReactEditorJS();
     Modal.setAppElement('#root');
+    const ReactEditorJS = createReactEditorJS();
 
     const editorCore = React.useRef(null)
 
