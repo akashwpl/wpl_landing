@@ -5,7 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    include: ["react-editor-js"],
-    exclude: ['primereact']
+    exclude: ['primereact', 'react-editor-js']
   }
 })
