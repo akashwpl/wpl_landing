@@ -4,9 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import { ParallaxProvider } from 'react-scroll-parallax';
 import { BrowserRouter } from "react-router-dom";
-import { PrimeReactProvider } from 'primereact/api';
-import Tailwind from 'primereact/passthrough/tailwind';
-import "primereact/resources/themes/lara-light-cyan/theme.css";
+
 import "quill/dist/quill.core.css";
 
 

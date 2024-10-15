@@ -18,7 +18,6 @@ wplId
 "D1J77N"
 
 export const leaderboard_dummy_data = [
-    
         {rank: 1, discordIdentifier: 'dj1nnn.', points: 1631, tier: 'Red Wolf & Puppy'},
         {rank: 2, discordIdentifier: 'jlji', points: 1105, tier: 'Red Wolf & Puppy'},
         {rank: 3, discordIdentifier: 'nurstar', points: 928, tier: 'Red Wolf & Puppy'},

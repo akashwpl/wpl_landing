@@ -7,8 +7,6 @@ import RoutesPublic from './routes/Routes'
 import AOS from 'aos';
 import 'aos/dist/aos.css'; 
 
-import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
-
 function App() {
 
   useEffect(() => {

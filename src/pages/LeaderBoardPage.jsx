@@ -8,7 +8,6 @@ import rightArrowSvg from '../assets/svg/right-arrow.svg'
 import axios from 'axios'
 import DisableZoom from '../hooks/usePreventZoom'
 
-import Papa from 'papaparse'
 import { BASE_URL } from '../utils/helper'
 
 

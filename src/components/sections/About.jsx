@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { CardBody, CardContainer, CardItem } from "../ui/3d-card";
 
@@ -25,9 +25,27 @@ import startEarnPng from '../../assets/subtract_png/start_earn.png'
 import startEarnHoverPng from '../../assets/subtract_png/start_earn_hover.png'
 import { leaderboard_dummy_data } from '../../utils/leaderboard_dummy_data';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { BASE_URL } from '../../utils/helper';
 
 
 const About = () => {
+
+    const [discordData, setDiscordData] = React.useState([]);
+
+    useEffect(() => {
+        const getData = async () => {
+            const response = (await axios({
+                method: 'GET',
+                url: `${BASE_URL}/leaderboard`,
+                // headers: headers
+            })).data;
+
+            setDiscordData(response?.data);
+        }
+        getData();
+    }, []);
+
   return (
     <div id="about_section" className='mx-5 md:mx-[130px] xl:mx-[400px] mt-32 z-[101] relative'>
         <div className='flex flex-col justify-center items-center text-center'>
@@ -128,10 +146,10 @@ const About = () => {
                                 <div className='mt-6 h-[40%] overflow-hidden'>
                                     <p className='text-[16px] md:text-[20px] text-white text-start font-gridular'>New Pack Members</p>
                                     <AnimatedList delay={3000}>
-                                        {leaderboard_dummy_data?.slice(0, 10)?.map((data, idx) => (
+                                        {discordData?.slice(0, 10)?.map((data, idx) => (
                                             <div key={idx} className='flex items-center gap-3 mt-6'>
                                                 <img src={aboutCard1Img} alt='about card 1 img' className='size-9 rounded-full object-cover'/>
-                                                <p className='text-[14px] md:text-[16px] text-white font-medium font-inter'>{data.discord_id}</p>
+                                                <p className='text-[14px] md:text-[16px] text-white font-medium font-inter'>{data?.discordIdentifier}</p>
                                             </div>
                                         ))}
                                     </AnimatedList>
@@ -140,7 +158,7 @@ const About = () => {
                                 <div className='mt-6 h-[50%] overflow-hidden'>
                                     <p className='text-[16px] md:text-[20px] text-white text-start font-gridular'>Recent Earners</p>
                                     <AnimatedList delay={2000}>
-                                        {leaderboard_dummy_data?.slice(10, 24)?.map((data, idx) => 
+                                        {discordData?.slice(10, 24)?.map((data, idx) => 
                                             <div key={idx} className='flex justify-between items-center gap-3 mt-6'>
                                                 <div className='flex items-center gap-4'>
                                                     <img src={aboutCard1Img} alt='about card 1 img' className='size-9 rounded-full object-cover'/>
