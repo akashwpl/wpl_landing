@@ -309,7 +309,6 @@ const AdminPanel = () => {
                 <div className='mt-4'>
                     <div className='text-black/60 text-sm'>Content:</div>
                     <ReactQuill 
-                        tools={EDITOR_JS_TOOLS} 
                         value={updateFAQContent}
                         onChange={setUpdateFAQContent}
                         placeholder={updateFAQContent}
