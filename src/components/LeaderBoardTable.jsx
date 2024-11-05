@@ -36,7 +36,7 @@ const LeaderboardTable = ({data, pos}) => {
     const widths = {
       'Discord Identifier': 'w-[15px] md:w-[50px] lg:w-[140px]',
       'WPL ID': 'w-[40px] md:w-[170px] lg:w-[130px]',
-      'Points': 'w-[25px] md:w-[100px] lg:w-[125px]',
+      // 'Points': 'w-[25px] md:w-[100px] lg:w-[125px]',
       'Cumulative Leaderboard': 'w-[20px] md:w-[100px] lg:w-[125px]',
       'Tier': 'w-[40px] md:w-[150px] lg:w-[150px]',
       'New Tier': 'w-[40px] md:w-[150px] lg:w-[150px]'
@@ -79,8 +79,9 @@ const LeaderboardTable = ({data, pos}) => {
         <table className="lg:w-[1187px] w-full min-w-[410px] h-[259px] bg-[#0F1971] text-white leading-[24px] table-fixed">
           <thead>
             <tr className='bg-[#0F1C79] text-[#CCCCF8]'>
-              {headerColumns2.map((key, index) => (
-                <th key={key} className={`py-3 leading-[12px] md:px-6 px-1 md:text-[12px] text-[8px] font-normal border-t border-l border-table_border_blue ${widths[key]} min-w-[60px]`}>
+              {headerColumns2.map((key, index) => {
+                if(key == 'Points') return
+                return <th key={key} className={`py-3 leading-[12px] md:px-6 px-1 md:text-[12px] text-[8px] font-normal border-t border-l border-table_border_blue ${widths[key]} min-w-[60px]`}>
                   {index === 0 ? (
                     <>
                       <span className="hidden md:inline">{key}</span>
@@ -88,7 +89,7 @@ const LeaderboardTable = ({data, pos}) => {
                     </>
                   ) : key}
                 </th>
-              ))}
+              })}
             </tr>
           </thead>
           <tbody className='border border-table_border_blue w-full'>
@@ -102,9 +103,9 @@ const LeaderboardTable = ({data, pos}) => {
                   <td key={row.wplId} className={`h-[56px] border-l border-table_border_blue font-inter min-w-[60px] w-[40px] md:w-[170px] lg:w-[130px] overflow-hidden text-ellipsis whitespace-nowrap`}>
                     {row.wplId}
                   </td>
-                  <td key={row.pointsMonthly} className={`h-[56px] border-l border-table_border_blue font-inter min-w-[60px] w-[25px] md:w-[100px] lg:w-[125px] overflow-hidden text-ellipsis whitespace-nowrap`}>
+                  {/* <td key={row.pointsMonthly} className={`h-[56px] border-l border-table_border_blue font-inter min-w-[60px] w-[25px] md:w-[100px] lg:w-[125px] overflow-hidden text-ellipsis whitespace-nowrap`}>
                     {row.pointsMonthly}
-                  </td>
+                  </td> */}
                   <td key={row.cumulativeLeaderboard} className={`h-[56px] border-l border-table_border_blue font-inter min-w-[60px] w-[20px] md:w-[100px] lg:w-[125px] overflow-hidden text-ellipsis whitespace-nowrap`}>
                     {row.cumulativeLeaderboard}
                   </td>
