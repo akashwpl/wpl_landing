@@ -54,8 +54,9 @@ const Features = () => {
 					hover_src_img={wpl_earn_btn_hover}
 					img_size_classes='w-[146px] md:w-[269px] h-[35.2px] md:h-[55px]'
 					className='font-gridular text-white text-[14px] md:text-[20.3px]'
-					btn_txt='Coming soon'
+					btn_txt='Apply Now'
 					alt_txt='wpl_earn_btn'
+					onClick={() => window.open('https://app.thewpl.xyz/onboarding')}
 				/>
 			</div>
 		</div>
