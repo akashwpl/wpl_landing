@@ -30,6 +30,8 @@ const AdminPanel = () => {
     const [faqLearnMore, setFaqLearnMore] = useState([])
     const [isLoading, setIsLoading] = useState(true);
 
+    const [selectedMonthlyLeaderFile, setSelectedMonthlyLeaderFile] = useState();
+
     const login = async () => {
         try {
             const response = await fetch(`${BASE_URL}/account/login`, {
@@ -86,12 +88,44 @@ const AdminPanel = () => {
         }
     }
 
+    const uploadMonthlyFile = async (e) => {
+        if(selectedMonthlyLeaderFile === null) {
+            alert('Please select a file to upload');
+            return;
+        }
+        const formData = new FormData();
+        formData.append('leaderboardCSVFile', selectedMonthlyLeaderFile);
+
+        try {
+            const response = await fetch(`${BASE_URL}/leaderboard/csv/flushAndAddMonthly`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token_wpl')}`,
+                },
+                body: formData
+            });
+            if(response.status === 401) {
+                alert('Unauthorized');
+                return;
+            }
+            if(response.status === 201) {
+                alert('File uploaded successfully');
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setSelectedMonthlyLeaderFile(null);
+        }
+    }
+
     const handleInputfile = (e) => {
         setSelectedFile(e.target.files[0]);
     }
 
+
     const cancelUpload = () => {
         setSelectedFile(null);
+        setSelectedMonthlyLeaderFile(null);
     }
 
     const getFaqsHome = async () => {
@@ -237,6 +271,28 @@ const AdminPanel = () => {
                     {selectedFile &&
                         <div className='mt-4 flex items-center gap-2'>
                             <button onClick={uploadFile} className='bg-primary px-4 py-1 rounded-md font-semibold'>Upload</button>
+                        </div>
+                    }
+                </div>
+
+                <div className='text-white text-3xl font-semi-bold mt-4'>Monthly Leaderboard:</div>
+                <div className='mt-1'>
+                    <div className='text-white flex items-center gap-2'>Selected File: <span className='text-primary font-semibold max-w-[300px] text-wrap'>{selectedMonthlyLeaderFile?.name}</span>
+                        {selectedMonthlyLeaderFile && <button onClick={cancelUpload} className='rounded-md font-semibold ml-2'>
+                                <XCircle size={20} className='hover:stroke-rose-500'/>
+                            </button>
+                        }
+                    </div>
+                    <p className='text-white/40 text-[10px] flex items-center gap-1'><Info size={12}/> Select a CSV file to upload</p>
+
+                    {!selectedMonthlyLeaderFile && 
+                        <div className='mt-4'>
+                            <input type='file' onChange={(e) => setSelectedMonthlyLeaderFile(e.target?.files[0])} className='text-primary font-semibold'/>
+                        </div>
+                    }
+                    {selectedMonthlyLeaderFile &&
+                        <div className='mt-4 flex items-center gap-2'>
+                            <button onClick={uploadMonthlyFile} className='bg-primary px-4 py-1 rounded-md font-semibold'>Upload</button>
                         </div>
                     }
                 </div>

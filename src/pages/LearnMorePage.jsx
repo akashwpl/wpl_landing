@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import KF_Card from '../components/KF_Card'
 import LM_Faq from '../components/LM_Faq'
 import LM_Marquee from '../components/LM_Marquee'
@@ -11,6 +11,8 @@ import startEarnPng from '../assets/subtract_png/start_earn.png'
 import startEarnHoverPng from '../assets/subtract_png/start_earn_hover.png'
 import DisableZoom from '../hooks/usePreventZoom'
 import { Info } from 'lucide-react'
+import axios from 'axios'
+import { BASE_URL } from '../utils/helper'
 
 const keyFeatureData = [
     {
@@ -48,10 +50,38 @@ const keyFeatureData = [
 ]
 
 
+const monthNames = [
+    "January", "February", "March", "April", "May", "June", 
+    "July", "August", "September", "October", "November", "December"
+];
+const currentMonthName = monthNames[new Date().getMonth()];
+
+
 const LearnMorePage = () => {
 
     const locState = useLocation().state
+    const [data, setData] = useState([]);
 
+    const token = import.meta.env.VITE_TOKEN
+    const headers = { 'Authorization': `Bearer ${token}`}
+
+    useEffect(() => {
+        const getData = async () => {
+          try {
+            const response = (await axios({
+              method: 'GET',
+              url: `${BASE_URL}/leaderboard/monthly`,
+            }))
+      
+            setData(response?.data?.data);
+          } catch (error) {
+            console.log('error fetching leaderboard', error);
+          }
+          
+        }
+    
+        getData();
+      }, []);
 
     useEffect(() => {
         if(locState && locState == "fromHomePage"){
@@ -122,7 +152,7 @@ const LearnMorePage = () => {
         {/* LEADERBOARD JUNE */}
         <div className=' mx-5 lg:mx-[130px]'>
             <div className='text-start'>
-                <div data-aos="fade-up" data-aos-delay="400" data-aos-duration="700" className='text-[36px] md:text-[48px] leading-[45.6px] font-bienvenue text-[#FAF1B1] uppercase mb-10'>Leaderboard Mid-August</div>
+                <div data-aos="fade-up" data-aos-delay="400" data-aos-duration="700" className='text-[36px] md:text-[48px] leading-[45.6px] font-bienvenue text-[#FAF1B1] uppercase mb-10'>Leaderboard {new Date().getDate() > 10 && new Date().getDate() < 20 ? "MID-" : ""}{currentMonthName}</div>
                 <div data-aos="fade-up" data-aos-delay="500" data-aos-duration="700" className='gap-6 flex flex-col'>
                     <p className='font-[300] text-[#CCCCF8] leading-[22px] max-w-[1200px]'>
                         If you've reached one or more tiers, you're eligible to claim rewards for those tiers. Register on <a href='https://app.onlydust.com/' target='_blank' className='underline text-white'>OnlyDust</a> using your GitHub account, follow their rules, and complete KYC to receive your rewards. If you haven't reached a tier yet, keep contributing and adding value. Remember to avoid spam and pump talk at all times. 
@@ -141,8 +171,8 @@ const LearnMorePage = () => {
                     </Link>
                 </div>
                 <div className='flex justify-center md:justify-start w-full mt-10'>
-                    {leaderboardJune?.length <= 0 ? <div className='text-white/80 flex items-center gap-1'><Info size={16}/>Learderboard will be updated soon!</div> :
-                        <LeaderboardTable data={leaderboardJune?.slice(0, 5)} pos={'justify-start'}/>
+                    {data?.length <= 0 ? <div className='text-white/80 flex items-center gap-1'><Info size={16}/>Learderboard will be updated soon!</div> :
+                        <LeaderboardTable data={data?.slice(0, 5)} pos={'justify-start'}/>
                     }
                 </div>
                
