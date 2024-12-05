@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-const LeaderboardTable = ({data, pos}) => {
+const LeaderboardTable = ({data, pos, fromTier = false}) => {
 
   console.log('data', data);
   
@@ -59,7 +59,8 @@ const LeaderboardTable = ({data, pos}) => {
           <thead className="rounded-md">
             <tr className='bg-[#0F1C79] text-[#CCCCF8] rounded-md'>
               {headerColumns2.map((key, index) => {
-                return <th key={key} className={`py-3 leading-[12px] md:px-6 px-1 md:text-[12px] text-[8px] font-normal ${widths[key]} min-w-[60px]`}>
+                return fromTier && key == "Points" ? null :
+                <th key={key} className={`py-3 leading-[12px] md:px-6 px-1 md:text-[12px] text-[8px] font-normal ${widths[key]} min-w-[60px]`}>
                   {index === 0 ? (
                     <>
                       <span className="hidden md:inline">{key}</span>
@@ -76,10 +77,12 @@ const LeaderboardTable = ({data, pos}) => {
                   <td key={row.wplId} className={`h-[56px] border-l border-table_border_blue font-inter min-w-[60px] w-[40px] md:w-[170px] lg:w-[130px] overflow-hidden text-ellipsis whitespace-nowrap`}>
                     {rowIndex + 1}
                   </td>
-                  <td key={row.discordIdentifier} className={`h-[56px] border-l border-table_border_blue font-inter min-w-[60px] w-[15px] md:w-[50px] lg:w-[140px] overflow-hidden text-ellipsis whitespace-nowrap`}>
-                    {/* {cellIndex === 0 ? `#${row[key]}` : row[key]} */}
-                    {row.discordIdentifier}
-                  </td>
+                  {!row.discordIdentifier ? null : 
+                    <td key={row.discordIdentifier} className={`h-[56px] border-l border-table_border_blue font-inter min-w-[60px] w-[15px] md:w-[50px] lg:w-[140px] overflow-hidden text-ellipsis whitespace-nowrap`}>
+                      {/* {cellIndex === 0 ? `#${row[key]}` : row[key]} */}
+                      {row.discordIdentifier}
+                    </td>
+                  } 
                   <td key={row.newTier} className={`h-[56px] border-l border-table_border_blue font-inter min-w-[60px] w-[40px] md:w-[150px] lg:w-[150px] overflow-hidden text-ellipsis whitespace-nowrap`}>
                     {row.newTier == "" ? row?.tier : row.newTier}
                   </td>

@@ -140,7 +140,7 @@ const LearnMorePage = () => {
                     </p>
                 </div>
                 <div className='flex justify-center md:justify-start w-full mt-12'>
-                    <LeaderboardTable data={tiers_points_data} pos={'justify-start'}/>
+                    <LeaderboardTable data={tiers_points_data} pos={'justify-start'} fromTier={true}/>
                 </div>
 
                 <div data-aos="fade-up" data-aos-delay="400" data-aos-duration="700" className='mt-4'>

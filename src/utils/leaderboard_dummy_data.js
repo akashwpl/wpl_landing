@@ -213,19 +213,19 @@ export const about_table_data = [
 
 
 export const tiers_points_data = [
-    {rank: 1, tier: 'Puppy', cumulativeLeaderboard: 330, reward: '$688'},
-    {rank: 2, tier: 'Red Wolf', cumulativeLeaderboard: 990, reward: '$1,376'},
-    {rank: 3, tier: 'Arctic Wolf', cumulativeLeaderboard: 1980, reward: '$2,063'},
-    {rank: 4, tier: 'Gray Wolf', cumulativeLeaderboard: 3300, reward: '$2,751'},
-    {rank: 5, tier: 'Celestial Wolf', cumulativeLeaderboard: 4950, reward: '$3,439'},
-    {rank: 6, tier: 'Fire Wolf', cumulativeLeaderboard: 6930, reward: '$4,127'},
-    {rank: 7, tier: 'Shadow Wolf', cumulativeLeaderboard: 9240, reward: '$4,815'},
-    {rank: 8, tier: 'Ice Wolf', cumulativeLeaderboard: 11880, reward: '$5,502'},
-    {rank: 9, tier: 'Thunder Wolf', cumulativeLeaderboard: 14850, reward: '$6,190'},
-    {rank: 10, tier: 'Warg', cumulativeLeaderboard: 18150, reward: '$6,878'},
-    {rank: 11, tier: 'Werewolf', cumulativeLeaderboard: 21780, reward: '$7,566'},
-    {rank: 12, tier: 'Fenrir', cumulativeLeaderboard: 25740, reward: '$8,253'},
-    {rank: 13, tier: 'Dire Wolf', cumulativeLeaderboard: 30030, reward: '$8,941'},
+    {rank: 1, newTier: 'Puppy', cumulativeLeaderboard: 330, },
+    {rank: 2, newTier: 'Red Wolf', cumulativeLeaderboard: 990, reward: '$1,376'},
+    {rank: 3, newTier: 'Arctic Wolf', cumulativeLeaderboard: 1980, reward: '$2,063'},
+    {rank: 4, newTier: 'Gray Wolf', cumulativeLeaderboard: 3300, reward: '$2,751'},
+    {rank: 5, newTier: 'Celestial Wolf', cumulativeLeaderboard: 4950, reward: '$3,439'},
+    {rank: 6, newTier: 'Fire Wolf', cumulativeLeaderboard: 6930, reward: '$4,127'},
+    {rank: 7, newTier: 'Shadow Wolf', cumulativeLeaderboard: 9240, reward: '$4,815'},
+    {rank: 8, newTier: 'Ice Wolf', cumulativeLeaderboard: 11880, reward: '$5,502'},
+    {rank: 9, newTier: 'Thunder Wolf', cumulativeLeaderboard: 14850, reward: '$6,190'},
+    {rank: 10, newTier: 'Warg', cumulativeLeaderboard: 18150, reward: '$6,878'},
+    {rank: 11, newTier: 'Werewolf', cumulativeLeaderboard: 21780, reward: '$7,566'},
+    {rank: 12, newTier: 'Fenrir', cumulativeLeaderboard: 25740, reward: '$8,253'},
+    {rank: 13, newTier: 'Dire Wolf', cumulativeLeaderboard: 30030, reward: '$8,941'},
 ]
 
 export const leaderboardJune = []
