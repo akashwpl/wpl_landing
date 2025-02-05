@@ -22,6 +22,8 @@ function NavBar() {
   }, [showNavbar])
 
 
+  if(pathname?.includes('/wplprogram')){ return null }
+
   return (
     <div className='w-full pt-8'>
       <div className='hidden md:flex justify-between items-center font-bienvenue mx-5 lg:mx-[130px]'>
