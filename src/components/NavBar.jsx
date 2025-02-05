@@ -19,13 +19,23 @@ function NavBar() {
     } else {
       document.body.style.overflow = 'auto'
     }
+
+    window.onload = function() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("hideNavbar") === "true") {
+        document.querySelector(".navbar").style.display = "none";
+      }
+    };
+    
   }, [showNavbar])
+
+  
 
 
   if(pathname?.includes('/wplprogram')){ return null }
 
   return (
-    <div className='w-full pt-8'>
+    <div className='w-full pt-8 navbar'>
       <div className='hidden md:flex justify-between items-center font-bienvenue mx-5 lg:mx-[130px]'>
         <div className='flex items-center gap-6'>
           <Link to={'/'} className='text-primary text-[18px]'><GlyphEffect text={'HOME'}/></Link>
