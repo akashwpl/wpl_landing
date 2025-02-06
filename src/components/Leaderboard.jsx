@@ -21,9 +21,15 @@ const Leaderboard = () => {
                 method: 'GET',
                 url: `${BASE_URL}/leaderboard`,
                 // headers: headers
-            })).data;
+            })).data;	
+						const updatedData = response?.data.map((item, index) => {
+							return {
+								rank: index + 1,
+								...item
+							}
+						})
 
-            setDiscordData(response?.data);
+            setDiscordData(updatedData);
         }
         getData();
     }, []);

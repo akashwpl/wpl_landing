@@ -75,7 +75,7 @@ const LeaderboardTable = ({data, pos, fromTier = false}) => {
             {data?.map((row, rowIndex) => (
               <tr key={row._id} onClick={() => window.open(`https://app.thewpl.xyz/profile/${row.discordIdentifier}`, "_blank")} className="text-center text-[10px] md:text-[14px] font-medium border-t border-table_border_blue cursor-pointer hover:bg-white/10">
                   <td key={row.wplId} className={`h-[56px] border-l border-table_border_blue font-inter min-w-[60px] w-[40px] md:w-[170px] lg:w-[130px] overflow-hidden text-ellipsis whitespace-nowrap`}>
-                    {rowIndex + 1}
+                    {row.rank}
                   </td>
                   {!row.discordIdentifier ? null : 
                     <td key={row.discordIdentifier} className={`h-[56px] border-l border-table_border_blue font-inter min-w-[60px] w-[15px] md:w-[50px] lg:w-[140px] overflow-hidden text-ellipsis whitespace-nowrap`}>

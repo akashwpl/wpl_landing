@@ -72,8 +72,15 @@ const LearnMorePage = () => {
               method: 'GET',
               url: `${BASE_URL}/leaderboard/monthly`,
             }))
+
+            const updatedData = response?.data?.data.map((item, index) => {
+                return {
+                    rank: index + 1,
+                    ...item
+                }
+            })
       
-            setData(response?.data?.data);
+            setData(updatedData);
           } catch (error) {
             console.log('error fetching leaderboard', error);
           }

@@ -19,9 +19,7 @@ const LeaderBoardPage = () => {
   const [itemsPerPage] = useState(9);
   const [isLoading, setIsLoading] = useState(true);
   const [tableHeight, setTableHeight] = useState(0);
-
   const [selectedFile, setSelectedFile] = useState(null);
-
 
   const API_URI = import.meta.env.VITE_SPREADSHEET_API_URL_NEW
   const token = import.meta.env.VITE_TOKEN
@@ -40,12 +38,16 @@ const LeaderBoardPage = () => {
         }))
   
         console.log('response learnadad', response);
-
         // Sheet db API
         // setData(response?.data);
-
         // Mongo DB API
-        setData(response?.data?.data);
+        const updatedData = response?.data?.data.map((item, index) => {
+          return {
+            rank: index + 1,
+            ...item
+          }
+        })
+        setData(updatedData);
         setIsLoading(false);
       } catch (error) {
         console.log('error fetching leaderboard', error);
@@ -56,17 +58,16 @@ const LeaderBoardPage = () => {
     getData();
   }, []);
 
-
-
-
   useEffect(() => {
     if(tableRef?.current) {
       setTableHeight(tableRef.current.offsetHeight);
     }
   }, [tableRef?.current, tableRef?.current?.offsetHeight]);
 
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  
   const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -75,7 +76,6 @@ const LeaderBoardPage = () => {
   for (let i = 1; i <= Math.ceil(data?.length / itemsPerPage); i++) {
     pageNumbers?.push(i);
   }
-
 
 
   return (
